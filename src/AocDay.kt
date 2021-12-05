@@ -1,7 +1,7 @@
 abstract class AocDay<T> {
     abstract val name: String
-    abstract val task1Spec: T
-    abstract val task2Spec: T
+    abstract val task1Spec: T?
+    abstract val task2Spec: T?
     abstract fun task1(input: List<String>): T
     abstract fun task2(input: List<String>): T
 
@@ -10,10 +10,16 @@ abstract class AocDay<T> {
     fun readTask2SpecInput(): List<String> = readInput("spec/$name.spec2")
 
     fun run() {
-        val spec1 = readTask1SpecInput()
-        check(task1(spec1) == task1Spec, { "Task 1 check failed" })
-        val spec2 = readTask2SpecInput()
-        check(task2(spec2) == task2Spec, { "Task 2 check failed" })
+        if (task1Spec != null) {
+            val spec1 = readTask1SpecInput()
+            val task1Actual = task1(spec1)
+            check(task1Actual == task1Spec, { "Task 1 check failed with $task1Actual" })
+        }
+        if (task2Spec != null) {
+            val spec2 = readTask2SpecInput()
+            val task2Actual = task2(spec2)
+            check(task2Actual == task2Spec, { "Task 2 check failed with $task2Actual" })
+        }
         val input = readInput()
         check(input.isNotEmpty(), { "Input is empty!" })
         println(task1(input))
