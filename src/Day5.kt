@@ -120,15 +120,11 @@ class Day5 : AocDay<Int>() {
                 }
             }
         }
-        linesMap.forEach {
-            it.forEach { print(if (it > 0) it else '.') }
-            println("")
-        }
         return linesMap.flatten().filter { it > 1 }.count()
     }
 }
 
 fun main() {
-    val task: AocDay<Int> = Day5()
+    val task = Day5()
     task.run()
 }

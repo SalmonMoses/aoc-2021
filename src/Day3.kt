@@ -68,6 +68,6 @@ class Day3 : AocDay<UInt>() {
 }
 
 fun main() {
-    val task: AocDay<UInt> = Day3()
+    val task = Day3()
     task.run()
 }
