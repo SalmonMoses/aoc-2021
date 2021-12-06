@@ -6,14 +6,11 @@ class Day6 : AocDay<Long>() {
     override val task2Spec: Long?
         get() = 26984457539
 
-    private fun loop(population: List<Int>, cycles: Int): Long {
-        var fishSchool = LongArray(9, { 0 })
-        for (fish in population) {
-            fishSchool.set(fish, fishSchool[fish] + 1)
-        }
+    private fun loop(population: LongArray, cycles: Int): Long {
+        var fishSchool = population
         for (i in 0 until cycles) {
             val newFish = fishSchool[0]
-            val newFishSchool = LongArray(9, { 0 })
+            val newFishSchool = LongArray(9) { 0 }
             for (days in 0..7) {
                 newFishSchool[days] = fishSchool[days + 1]
             }
@@ -25,13 +22,21 @@ class Day6 : AocDay<Long>() {
     }
 
     override fun task1(input: List<String>): Long {
-        val initialPopulation = input[0].split(",").map { it.toInt() }.toList()
-        return loop(initialPopulation, 80)
+        val initialPopulation = input[0].split(",").map { it.toInt() }
+        val initialSchool = LongArray(9) { 0 }
+        for (fish in initialPopulation) {
+            initialSchool[fish] = initialSchool[fish] + 1
+        }
+        return loop(initialSchool, 80)
     }
 
     override fun task2(input: List<String>): Long {
-        val initialPopulation = input[0].split(",").map { it.toInt() }.toList()
-        return loop(initialPopulation, 256)
+        val initialPopulation = input[0].split(",").map { it.toInt() }
+        val initialSchool = LongArray(9) { 0 }
+        for (fish in initialPopulation) {
+            initialSchool[fish] = initialSchool[fish] + 1
+        }
+        return loop(initialSchool, 256)
     }
 }
 
