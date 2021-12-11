@@ -1,6 +1,6 @@
-class DayX : AocDay<Long>() {
+class Day12 : AocDay<Long>() {
     override val name: String
-        get() = "DayX"
+        get() = "Day12"
     override val task1Spec: Long?
         get() = null
     override val task2Spec: Long?
@@ -16,6 +16,6 @@ class DayX : AocDay<Long>() {
 }
 
 fun main() {
-    val task = DayX()
+    val task = Day12()
     task.run()
 }
