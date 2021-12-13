@@ -1,8 +1,4 @@
-class Grid(private val grid: Array<LongArray>) {
-    operator fun get(x: Int, y: Int): Long {
-        return grid[y][x]
-    }
-
+class TubesGrid(grid: Array<LongArray>) : Grid<Long>(grid.map { it.toList() }) {
     val height = grid.size
     val width = grid[0].size
 
@@ -84,7 +80,7 @@ class Day9 : AocDay<Long>() {
         for (i in 0 until input.size) {
             gridArray[i] = input[i].split("").filter { it.isNotBlank() }.map { it.toLong() }.toLongArray()
         }
-        val grid = Grid(gridArray)
+        val grid = TubesGrid(gridArray)
         val lowPoints = mutableListOf<Long>()
         for (y in 0 until grid.height) {
             for (x in 0 until grid.width) {
@@ -101,7 +97,7 @@ class Day9 : AocDay<Long>() {
         for (i in 0 until input.size) {
             gridArray[i] = input[i].split("").filter { it.isNotBlank() }.map { it.toLong() }.toLongArray()
         }
-        val grid = Grid(gridArray)
+        val grid = TubesGrid(gridArray)
         val lowPoints = mutableListOf<Pair<Int, Int>>()
         for (y in 0 until grid.height) {
             for (x in 0 until grid.width) {

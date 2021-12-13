@@ -55,8 +55,7 @@ class Day8 : AocDay<Long>() {
             8 to ('a'..'g').toSet(),
             9 to setOf('a', 'b', 'c', 'd', 'f', 'g')
         )
-        val numbersWithFive = numbers.filter { it.value.size == 5 }.values.fold(setOf<Char>()) { acc, cur -> acc union cur }
-        val numbersWithSix = numbers.filter { it.value.size == 6 }.values.fold(setOf<Char>()) { acc, cur -> acc union cur }
+        val font = numbers.map { it.value to it.key }.toMap()
         return input.map { Entry.fromString(it) }.map { entry ->
             val alphabet = Alphabet()
             val one = entry.patterns.filter { it.length == 2 }[0]
@@ -67,15 +66,17 @@ class Day8 : AocDay<Long>() {
             seven.forEach { alphabet.addGuess(it, numbers[7]!!) }
             val eight = entry.patterns.filter { it.length == 7 }[0]
             eight.forEach { alphabet.addGuess(it, numbers[8]!!) }
-            val patternWithFiveSymbols = entry.patterns.filter { it.length == 5 }
-            patternWithFiveSymbols.forEach { pattern ->
-                pattern.forEach { alphabet.addGuess(it, numbersWithFive) }
+            val patternWithSixSymbols = entry.patterns.filter { it.length == 6 }.map { it.toSet() }
+            ('a'..'g').forEach { char ->
+                patternWithSixSymbols.forEach { alphabet.addGuess(char, it) }
             }
-            val patternWithSixSymbols = entry.patterns.filter { it.length == 6 }
-            patternWithSixSymbols.forEach { pattern ->
-                pattern.forEach { alphabet.addGuess(it, numbersWithSix) }
+            val patternWithFiveSymbols = entry.patterns.filter { it.length == 5 }.map { it.toSet() }
+            ('a'..'g').forEach { char ->
+                patternWithFiveSymbols.forEach { alphabet.addGuess(char, it) }
             }
-            check(alphabet.correctMap.filter { it.value != null }.size == 7, { "Лох ты, а не криптоаналитик" })
+            val lastLetter = ('a'..'g').minus(alphabet.getGuessedSymbols())[0]
+            val lastNotGuessedLetter = alphabet.correctMap.filter { it.value == null }.map { it.key }[0]
+            alphabet.correctMap[lastNotGuessedLetter] = lastLetter
             0L
         }.sum()
     }

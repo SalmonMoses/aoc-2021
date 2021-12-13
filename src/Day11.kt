@@ -1,21 +1,21 @@
 class Octopus(var energy: Int) {
-    fun flash(): Boolean {
+    fun charge(): Boolean {
         energy += 1
         return energy == 10
     }
 }
 
-class OctopusGrid(val grid: List<List<Octopus>>) {
-    fun flashAt(x: Int, y: Int): Long {
+class OctopusGrid(grid: List<List<Octopus>>) : Grid<Octopus>(grid) {
+    fun chargeAt(x: Int, y: Int): Long {
         var flashes = 0L
-        if (grid[y][x].flash()) {
+        if (grid[y][x].charge()) {
             flashes += 1
             (-1..1).forEach { dy ->
                 (-1..1).forEach { dx ->
                     val newX = x + dx
                     val newY = y + dy
                     if (newX in (0..9) && newY in (0..9)) {
-                        flashes += flashAt(x + dx, y + dy)
+                        flashes += chargeAt(x + dx, y + dy)
                     }
                 }
             }
@@ -56,7 +56,7 @@ class Day11 : AocDay<Long>() {
         (0..99).forEach {
             for (y in 0..9) {
                 for (x in 0..9) {
-                    flashes += grid.flashAt(x, y)
+                    flashes += grid.chargeAt(x, y)
                 }
             }
             grid.reset()
@@ -80,7 +80,7 @@ class Day11 : AocDay<Long>() {
             var flashes = 0L
             for (y in 0..9) {
                 for (x in 0..9) {
-                    flashes += grid.flashAt(x, y)
+                    flashes += grid.chargeAt(x, y)
                 }
             }
             if (flashes == 100L) {
@@ -88,7 +88,6 @@ class Day11 : AocDay<Long>() {
             }
             grid.reset()
         }
-        return 0L
     }
 }
 
