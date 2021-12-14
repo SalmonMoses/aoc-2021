@@ -26,9 +26,8 @@ class Day13 : AocDay<Long>() {
         }
         ++line
         val foldDesc = input[line].substring(11)
-        val axis = foldDesc[0]
         val coordinate = foldDesc.substring(2).toLong()
-        when (axis) {
+        when (foldDesc[0]) {
             'x' -> {
                 points =
                     points.map { (x, y) -> Pair(if (x > coordinate) maxX - x else x, y) }.distinct().toMutableList()
