@@ -14,7 +14,7 @@ abstract class AocDay<T> {
 
     fun run() {
         if (task1Spec != null) {
-            val spec = if (File("spec/$name.spec1").exists()) {
+            val spec = if (File("spec/$name.spec1.txt").exists()) {
                 readTask1SpecInput()
             } else {
                 readTaskSpecInput()
@@ -23,7 +23,7 @@ abstract class AocDay<T> {
             check(task1Actual == task1Spec, { "Task 1 check failed with $task1Actual" })
         }
         if (task2Spec != null) {
-            val spec = if (File("spec/$name.spec2").exists()) {
+            val spec = if (File("spec/$name.spec2.txt").exists()) {
                 readTask2SpecInput()
             } else {
                 readTaskSpecInput()

@@ -10,15 +10,7 @@ class OctopusGrid(grid: List<List<Octopus>>) : Grid<Octopus>(grid) {
         var flashes = 0L
         if (grid[y][x].charge()) {
             flashes += 1
-            (-1..1).forEach { dy ->
-                (-1..1).forEach { dx ->
-                    val newX = x + dx
-                    val newY = y + dy
-                    if (newX in (0..9) && newY in (0..9)) {
-                        flashes += chargeAt(x + dx, y + dy)
-                    }
-                }
-            }
+            getNeighborsDiagonal(x, y).forEach { (newX, newY) -> flashes += chargeAt(newX, newY) }
         }
         return flashes
     }

@@ -1,43 +1,6 @@
 class TubesGrid(grid: Array<LongArray>) : Grid<Long>(grid.map { it.toList() }) {
-    val height = grid.size
-    val width = grid[0].size
-
-    fun getAdjacent(x: Int, y: Int): List<Long> {
-        val adjacents = mutableListOf<Long>()
-        if (x > 0) {
-            adjacents.add(this[x - 1, y])
-        }
-        if (x < grid[0].size - 1) {
-            adjacents.add(this[x + 1, y])
-        }
-        if (y > 0) {
-            adjacents.add(this[x, y - 1])
-        }
-        if (y < grid.size - 1) {
-            adjacents.add(this[x, y + 1])
-        }
-        return adjacents
-    }
-
-    fun getAdjacentLocations(x: Int, y: Int): List<Pair<Int, Int>> {
-        val adjacents = mutableListOf<Pair<Int, Int>>()
-        if (x > 0) {
-            adjacents.add(Pair(x - 1, y))
-        }
-        if (x < grid[0].size - 1) {
-            adjacents.add(Pair(x + 1, y))
-        }
-        if (y > 0) {
-            adjacents.add(Pair(x, y - 1))
-        }
-        if (y < grid.size - 1) {
-            adjacents.add(Pair(x, y + 1))
-        }
-        return adjacents
-    }
-
     fun isLowpoint(x: Int, y: Int): Boolean {
-        val adjacencies = getAdjacent(x, y)
+        val adjacencies = getNeighborValues(x, y)
         val checkingPoint = this[x, y]
         return adjacencies.map { it > checkingPoint }.reduce { acc, curr -> acc && curr }
     }
@@ -50,7 +13,7 @@ class TubesGrid(grid: Array<LongArray>) : Grid<Long>(grid.map { it.toList() }) {
         while (checkQueue.isNotEmpty()) {
             val nextPoint = checkQueue.removeFirst()
             val nextPointValue = this[nextPoint.first, nextPoint.second]
-            val adjacents = this.getAdjacentLocations(nextPoint.first, nextPoint.second)
+            val adjacents = this.getNeighbors(nextPoint.first, nextPoint.second)
             for (point in adjacents) {
                 if (visitedPoints.contains(point)) {
                     continue
